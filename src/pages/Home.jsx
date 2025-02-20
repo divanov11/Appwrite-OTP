@@ -39,7 +39,11 @@ const Home = () => {
                                 Welcome Back!
                             </h2>
                             <p className="text-gray-600 mt-2">
-                                Hello, {user?.name ? user.name : user?.phone} 👋
+                                Hello,{" "}
+                                {user?.name
+                                    ? user.name
+                                    : user?.phone || user?.email}{" "}
+                                👋
                             </p>
                         </div>
                     )}
