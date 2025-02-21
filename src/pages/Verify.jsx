@@ -1,51 +1,53 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { account } from "../lib/appwriteConfig";
-import { useSearchParams } from "react-router-dom";
 
 const Verify = () => {
-    const [code, setCode] = useState("");
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [searchParams] = useSearchParams();
-    const userId = searchParams.get("token");
+    const navigate = useNavigate();
+    const secretoken = searchParams.get("secret");
+    const userId = searchParams.get("userId");
+    const email = searchParams.get("email");
 
     useEffect(() => {
-        const getSession = async () => {
-            try {
-                const session = await account.get();
-                console.log(session);
-                navigate("/");
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        getSession();
+        init();
     }, []);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const init = async () => {
+        if (userId && secretoken) {
+            setSession();
+        }
+        setLoading(false);
+    };
 
+    const setSession = async () => {
+        setLoading(true);
         try {
-            const session = await account.createSession(userId, code);
-            console.log(session);
+            const session = await account.createSession(userId, secretoken);
             navigate("/");
         } catch (error) {
-            console.log(error);
+            setError(error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <h3>Verify your phone number</h3>
-            <input
-                type="text"
-                placeholder="Code"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-            />
-            <button type="submit">Verify</button>
-        </form>
-    );
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
+    if (email) {
+        return (
+            <div>
+                We emailed a magic link to {email}. Click the link to sign in.
+            </div>
+        );
+    }
 };
 
 export default Verify;

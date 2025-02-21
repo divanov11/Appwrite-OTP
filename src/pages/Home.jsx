@@ -33,7 +33,18 @@ const Home = () => {
         );
     }
 
-    return <div>Hello {user?.name ? user.name : user?.phone} 👋</div>;
+    return (
+        <div>
+            Hello{" "}
+            {user?.name
+                ? user.name
+                : user?.phone
+                ? user.phone
+                : user.email
+                ? user.email
+                : "User"}
+        </div>
+    );
 };
 
 export default Home;

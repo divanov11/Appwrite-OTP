@@ -4,16 +4,20 @@ import { ID } from "appwrite";
 import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
-    const [phone, setPhone] = useState("");
+    const [email, setEmail] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const token = await account.createPhoneToken(ID.unique(), phone);
+            const token = await account.createMagicURLToken(
+                ID.unique(),
+                email,
+                "http://localhost:5173/verify"
+            );
             console.log(token);
-            navigate(`/verify?token=${token.userId}`);
+            navigate(`/verify?email=${email}`);
         } catch (error) {
             console.log(error);
         }
@@ -21,14 +25,14 @@ const Signin = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h3>Signin with your phone number</h3>
+            <h3>Send with your email</h3>
             <input
-                type="tel"
-                placeholder="+1234567890"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                type="email"
+                placeholder="example@gmail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
             />
-            <button type="submit">Send verification code</button>
+            <button type="submit">Send link to email</button>
         </form>
     );
 };

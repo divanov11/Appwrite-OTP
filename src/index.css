@@ -4,6 +4,9 @@
 /* Apply Inter font to all elements */
 * {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* Base Layout */
