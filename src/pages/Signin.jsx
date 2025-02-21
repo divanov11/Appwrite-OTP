@@ -63,7 +63,7 @@ const Signin = () => {
                     <div className="flex justify-center gap-4">
                         <button
                             onClick={() => setIsPhoneAuth(true)}
-                            className={`bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+                            className={`bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center transition-all cursor-pointer ${
                                 isPhoneAuth ? "ring-2 ring-indigo-600" : ""
                             }`}
                         >
@@ -71,7 +71,7 @@ const Signin = () => {
                         </button>
                         <button
                             onClick={() => setIsPhoneAuth(false)}
-                            className={`bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+                            className={`bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center transition-all cursor-pointer ${
                                 !isPhoneAuth ? "ring-2 ring-indigo-600" : ""
                             }`}
                         >
